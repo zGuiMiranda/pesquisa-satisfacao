@@ -1,5 +1,8 @@
-# pesquisa-satisfacao
+# Pesquisa-satisfacao
 
+NodeJS, Typescript, Jest, PostgresSQL.
+
+<hr/>
 <b><h2>Prerequisites:</h2></b> 
 Node.js v20+
 

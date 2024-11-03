@@ -77,13 +77,14 @@ test("Should  update a  existant customer satisfaction survey", async function (
     status: SATISFACTION_SURVEY_STATUSES.ACTIVE,
   };
 
-  const updateRFesponse = await updateSatisfactionSurvey.execute(updateInput);
-  expect(updateRFesponse.contactEmail).toBe(updateInput.contactEmail);
-  expect(updateRFesponse.title).toBe(updateInput.title);
-  expect(updateRFesponse.description).toBe(updateInput.description);
-  expect(updateRFesponse.id).toBe(updateInput.id);
-  expect(updateRFesponse.maxRating).toBe(updateInput.maxRating);
+  const updateResponse = await updateSatisfactionSurvey.execute(updateInput);
 
-  expect(updateRFesponse.updatedAt).not.toBeNull();
-  expect(updateRFesponse.updatedAt).toBeInstanceOf(Date);
+  expect(updateResponse.contactEmail).toBe(updateInput.contactEmail);
+  expect(updateResponse.title).toBe(updateInput.title);
+  expect(updateResponse.description).toBe(updateInput.description);
+  expect(updateResponse.id).toBe(updateInput.id);
+  expect(updateResponse.maxRating).toBe(updateInput.maxRating);
+
+  expect(updateResponse.updatedAt).not.toBeNull();
+  expect(updateResponse.updatedAt).toBeInstanceOf(Date);
 });

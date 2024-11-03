@@ -1,6 +1,7 @@
 import GetCustomerSatisfactionSurveyAnswers from "../../../src/application/usecase/get-customer-satisfaction-survey-answers";
 import CreateCustomerSatisfactionSurveyAnswer from "../../../src/application/usecase/create-customer-satisfaction-survey-answer";
-import AbstractController from "./AbstractController";
+import AbstractController from "./abstract-controller";
+import ExportCustomerSatisfactionSurveyAnswers from "../../../src/application/usecase/export-customer-satisfaction-survey-answers";
 
 export type AnswerSurveyData = {
   customerSatisfactionSurveyId: string;
@@ -28,6 +29,9 @@ export default class CustomerSatisfactionSurveyAnswerController extends Abstract
   private getSurveyAnswers: GetCustomerSatisfactionSurveyAnswers =
     new GetCustomerSatisfactionSurveyAnswers();
 
+  private exportCustomerSatisfactionSurveyAnswers: ExportCustomerSatisfactionSurveyAnswers =
+    new ExportCustomerSatisfactionSurveyAnswers();
+
   async answerSurvey(data: AnswerSurveyData, res) {
     try {
       const response =
@@ -45,6 +49,25 @@ export default class CustomerSatisfactionSurveyAnswerController extends Abstract
     try {
       const response = await this.getSurveyAnswers.execute(data);
       this.sendResponse(response, res, this.STATUSES.SUCCESS);
+    } catch (error: unknown) {
+      this.handleError(error, res);
+    }
+  }
+
+  async exportSurveyAnswersByTargetAudience(
+    data: GetSurveyAnswersByTargetAudienceData,
+    res
+  ) {
+    try {
+      const response =
+        await this.exportCustomerSatisfactionSurveyAnswers.execute(data);
+
+      this.sendResponseCSV(
+        response,
+        res,
+        this.STATUSES.SUCCESS,
+        "survey_answers"
+      );
     } catch (error: unknown) {
       this.handleError(error, res);
     }

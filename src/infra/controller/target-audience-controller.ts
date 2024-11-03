@@ -1,5 +1,5 @@
 import GetTargetAudience from "../../../src/application/usecase/get-target-audience";
-import AbstractController from "./AbstractController";
+import AbstractController from "./abstract-controller";
 
 export default class TargetAudienceController extends AbstractController {
   private getTargetAudienceUseCase: GetTargetAudience = new GetTargetAudience();

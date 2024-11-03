@@ -25,9 +25,8 @@ export default class CreateCustomerSatisfactionSurveyAnswer {
     if (surveyFromDatabase.MaxRating < input.rating) {
       throw new BusinessError(BUSINESS_ERRORS.RATING_GREATER_THAN_ALLOWED);
     }
-
     const answer = CustomerSatisfactionSurveyAnswer.create(
-      input.customerSatisfactionSurveyId,
+      surveyFromDatabase,
       input.rating,
       input.feedback
     );
@@ -38,7 +37,8 @@ export default class CreateCustomerSatisfactionSurveyAnswer {
     return {
       customerSatisfactionSurveyAnswerId:
         answerResponse.CustomSatisfactionSurveyAnswerId,
-      customerSatisfactionSurveyId: answerResponse.CustomSatisfactionSurveyId,
+      customerSatisfactionSurveyId:
+        answerResponse.CustomerSatisfactionSurvey.CustomSatisfactionSurveyId,
       feedback: answerResponse.Feedback,
       rating: answerResponse.Rating,
       createdAt: answerResponse.CreatedAt,

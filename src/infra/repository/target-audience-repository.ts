@@ -19,8 +19,8 @@ export default class TargetAudienceRepository
       `select * from  ${process.env.POSTGRES_SCHEMA}.target_audience`
     );
     return targetAudience.map(
-      (ta: { target_audience_id: string }) =>
-        new TargetAudience(ta.target_audience_id)
+      (ta: { target_audience_id: string; name: string }) =>
+        new TargetAudience(ta.target_audience_id, ta.name)
     );
   }
 
@@ -32,11 +32,12 @@ export default class TargetAudienceRepository
 
     if (!targetAudience) return null;
 
-    const { target_audience_id } =
+    const { target_audience_id, name } =
       (targetAudience as {
         target_audience_id: string;
+        name: string;
       }) || {};
 
-    return new TargetAudience(target_audience_id);
+    return new TargetAudience(target_audience_id, name);
   }
 }

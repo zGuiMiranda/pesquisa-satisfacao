@@ -1,6 +1,6 @@
 import UpdateCustomerSatisfactionSurvey from "../../../src/application/usecase/update-customer-satisfaction-survey";
 import CreateCustomerSatisfactionSurvey from "../../../src/application/usecase/create-customer-satisfaction-survey";
-import AbstractController from "./AbstractController";
+import AbstractController from "./abstract-controller";
 
 export type CreateSurveyData = {
   title: string;

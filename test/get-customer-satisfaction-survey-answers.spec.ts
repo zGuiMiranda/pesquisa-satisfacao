@@ -3,8 +3,6 @@ import CreateCustomerSatisfactionSurvey from "src/application/usecase/create-cus
 import CreateCustomerSatisfactionSurveyAnswer from "src/application/usecase/create-customer-satisfaction-survey-answer";
 import GetCustomerSatisfactionSurveyAnswers from "src/application/usecase/get-customer-satisfaction-survey-answers";
 import GetTargetAudience from "src/application/usecase/get-target-audience";
-import BusinessError from "src/domain/errors/business-error";
-import { BUSINESS_ERRORS } from "src/domain/errors/errors";
 
 let createSatisfactionSurveyAnswer: CreateCustomerSatisfactionSurveyAnswer;
 let createSatisfactionSurvey: CreateCustomerSatisfactionSurvey;
@@ -21,7 +19,7 @@ beforeAll(async () => {
   getSatisfactionSurveyAnswers = new GetCustomerSatisfactionSurveyAnswers();
 });
 
-test("Should  create a customer satisfaction survey answer by asc", async function () {
+test("Should  get customer satisfaction survey answers by asc", async function () {
   const inputCreateSurvey = {
     title: faker.lorem.words(3),
     description: faker.lorem.words(5),
@@ -78,7 +76,7 @@ test("Should  create a customer satisfaction survey answer by asc", async functi
   ).toBe(true);
 });
 
-test("Should  create a customer satisfaction survey answer by desc", async function () {
+test("Should  get customer satisfaction survey answers by desc", async function () {
   const inputCreateSurvey = {
     title: faker.lorem.words(3),
     description: faker.lorem.words(5),

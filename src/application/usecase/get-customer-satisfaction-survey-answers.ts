@@ -22,10 +22,10 @@ export default class GetCustomerSatisfactionSurveyAnswers {
         input.targetAudienceId,
         input.order
       );
-
     return response.map((answer) => ({
       id: answer.CustomSatisfactionSurveyAnswerId,
-      customerSatisfactioNSurvey: answer.CustomSatisfactionSurveyId,
+      customerSatisfactionSurveyId:
+        answer.CustomerSatisfactionSurvey.CustomSatisfactionSurveyId,
       feedback: answer.Feedback,
       rating: answer.Rating,
       createdAt: answer.CreatedAt,
@@ -35,7 +35,7 @@ export default class GetCustomerSatisfactionSurveyAnswers {
 type Input = { targetAudienceId: string; order?: "asc" | "desc" };
 type Output = {
   id: string;
-  customerSatisfactioNSurvey: string;
+  customerSatisfactionSurveyId: string;
   feedback: string;
   rating: number;
   createdAt: Date;

@@ -56,12 +56,16 @@ export async function CustomerSatisfactionSurveyRoutesAnswer(
       },
       response: {
         200: {
-          type: "object",
-          properties: {
-            id: { type: "string" },
-            customerSatisfactionSurveyId: { type: "string" },
-            feedback: { type: "string" },
-            rating: { type: "number" },
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              id: { type: "string" },
+              customerSatisfactionSurveyId: { type: "string" },
+              feedback: { type: "string" },
+              rating: { type: "number" },
+              createdAt: { type: "string" },
+            },
           },
         },
       },
@@ -75,6 +79,55 @@ export async function CustomerSatisfactionSurveyRoutesAnswer(
       const { targetAudienceId, order } = request.query;
 
       return customerSatisfactionSurveyAnswerController.getSurveyAnswersByTargetAudience(
+        { targetAudienceId, order },
+        reply
+      );
+    },
+  });
+
+  fastify.get("/exportSurveyAnswers", {
+    schema: {
+      querystring: {
+        type: "object",
+        properties: {
+          targetAudienceId: { type: "string" },
+          order: { type: "string", enum: ["asc", "desc"] },
+        },
+        required: ["targetAudienceId"],
+      },
+      response: {
+        200: {
+          description: "Exportar respostas",
+          content: {
+            csv: {
+              schema: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: { type: "string" },
+                    customerSatisfactionSurveyId: { type: "string" },
+                    feedback: { type: "string" },
+                    rating: { type: "number" },
+                    createdAt: { type: "string" },
+                  },
+                },
+                format: "binary",
+              },
+            },
+          },
+        },
+      },
+    },
+    handler: async (
+      request: FastifyRequest<{
+        Querystring: GetSurveyAnswersByTargetAudienceData;
+      }>,
+      reply
+    ) => {
+      const { targetAudienceId, order } = request.query;
+
+      return customerSatisfactionSurveyAnswerController.exportSurveyAnswersByTargetAudience(
         { targetAudienceId, order },
         reply
       );

@@ -25,7 +25,7 @@ export default class CustomerSatisfactionSurvey {
     title: string,
     description: string,
     maxRating: number,
-    targetAudience: string,
+    targetAudience: TargetAudience,
     status: string,
     contactEmail: string,
     createdAt?: Date,
@@ -38,7 +38,10 @@ export default class CustomerSatisfactionSurvey {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.status = new CustomerSatisfactionSurveyStatus(status);
-    this.targetAudience = new TargetAudience(targetAudience);
+    this.targetAudience = new TargetAudience(
+      targetAudience.Id,
+      targetAudience.Name
+    );
     this.contactEmail = new Email(contactEmail);
   }
 
@@ -46,7 +49,7 @@ export default class CustomerSatisfactionSurvey {
     title: string,
     description: string,
     maxRating: number,
-    targetAudience: string,
+    targetAudience: TargetAudience,
     contactEmail: string,
     updatedAt?: Date,
     feedback?: string
@@ -78,8 +81,8 @@ export default class CustomerSatisfactionSurvey {
   get MaxRating(): number {
     return this.maxRating.Rating;
   }
-  get TargetAudience(): string {
-    return this.targetAudience.Id;
+  get TargetAudience(): TargetAudience {
+    return this.targetAudience;
   }
   get Status(): string {
     return this.status.Value;

@@ -12,6 +12,7 @@ import swaggerUi from "@fastify/swagger-ui";
 import { CustomerSatisfactionSurveyRoutes } from "./src/customer-satisfaction-survey-routes.routes";
 import { TargetAudienceRoutes } from "./src/target-audience.routes";
 import { CustomerSatisfactionSurveyRoutesAnswer } from "./src/customer-satisfaction-survey-routes-answer.routes";
+import ExcelJSExportService from "./src/infra/export/export-to-csv";
 
 class App {
   public server: FastifyInstance;
@@ -91,6 +92,10 @@ class App {
     Registry.getInstance().provide(
       "customerSatisfactionSurveyAnswerRepository",
       CustomerSatisfactionSurveyAnswerRepository.getInstance()
+    );
+    Registry.getInstance().provide(
+      "exportService",
+      ExcelJSExportService.getInstance()
     );
   }
 }

@@ -1,3 +1,4 @@
+import TargetAudience from "../../../src/domain/entity/target-audience";
 import CustomerSatisfactionSurvey from "../../../src/domain/entity/customer-satisfaction-survey";
 import BusinessError from "../../../src/domain/errors/business-error";
 import { BUSINESS_ERRORS } from "../../../src/domain/errors/errors";
@@ -15,7 +16,7 @@ export default class CreateCustomerSatisfactionSurvey {
       input.title,
       input.description,
       input.maxRating,
-      input.targetAudienceId,
+      new TargetAudience(input.targetAudienceId),
       input.contactEmail
     );
 
@@ -37,7 +38,7 @@ export default class CreateCustomerSatisfactionSurvey {
       maxRating: response.MaxRating,
       contactEmail: response.ContactEmail,
       createdAt: response.CreatedAt,
-      targetAudienceId: response.TargetAudience,
+      targetAudienceId: response.TargetAudience.Id,
       status: response.Status,
     };
   }

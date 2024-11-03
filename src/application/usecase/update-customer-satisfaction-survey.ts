@@ -4,6 +4,7 @@ import { BUSINESS_ERRORS } from "../../../src/domain/errors/errors";
 import { inject } from "../../../src/infra/di/di";
 import { RepositoryInterface } from "../../../src/infra/repository/repository-interface";
 import { TargetAudienceRepositoryInterface } from "../../../src/infra/repository/target-audience-repository";
+import TargetAudience from "../../../src/domain/entity/target-audience";
 
 export default class UpdateCustomerSatisfactionSurvey {
   @inject("customerSatisfactionSurveyRepository")
@@ -26,7 +27,7 @@ export default class UpdateCustomerSatisfactionSurvey {
       input.title,
       input.description,
       input.maxRating,
-      input.targetAudienceId,
+      new TargetAudience(input.targetAudienceId),
       input.status,
       input.contactEmail,
       null,
@@ -51,7 +52,7 @@ export default class UpdateCustomerSatisfactionSurvey {
       maxRating: response.MaxRating,
       contactEmail: response.ContactEmail,
       createdAt: response.CreatedAt,
-      targetAudienceId: response.TargetAudience,
+      targetAudienceId: response.TargetAudience.Id,
       updatedAt: response.UpdatedAt,
     };
   }

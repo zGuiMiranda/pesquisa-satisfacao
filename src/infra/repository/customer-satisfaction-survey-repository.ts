@@ -1,3 +1,4 @@
+import TargetAudience from "../../../src/domain/entity/target-audience";
 import CustomerSatisfactionSurvey from "../../../src/domain/entity/customer-satisfaction-survey";
 import { SATISFACTION_SURVEY_STATUSES_TYPE } from "../../../src/domain/vo/customer-satisfaction-survey-status";
 import DatabaseConnection from "../database/database-connection";
@@ -19,7 +20,7 @@ export default class CustomerSatisfactionSurveyRepository
       `insert into ${this.schemaTableStatement} (customer_satisfaction_survey_id, target_audience_id, title, description, max_rating, contact_email, status) values ($1, $2, $3, $4, $5, $6, $7) RETURNING customer_satisfaction_survey_id`,
       [
         customerSatisfactionSurvey.CustomSatisfactionSurveyId,
-        customerSatisfactionSurvey.TargetAudience,
+        customerSatisfactionSurvey.TargetAudience.Id,
         customerSatisfactionSurvey.Title,
         customerSatisfactionSurvey.Description,
         customerSatisfactionSurvey.MaxRating,
@@ -50,7 +51,12 @@ export default class CustomerSatisfactionSurveyRepository
 
   async findById(id: string): Promise<CustomerSatisfactionSurvey> {
     const [survey] = await this.connection?.query(
-      `select * from  ${this.schemaTableStatement} where customer_satisfaction_survey_id = $1`,
+      `select css.customer_satisfaction_survey_id,
+       css.title, css.description, css.max_rating, css.target_audience_id,
+       ta.name as target_audience_name, css.status, css.contact_email,css.created_at, css.updated_at       
+        from  ${this.schemaTableStatement} css
+      inner join ${process.env.POSTGRES_SCHEMA}.target_audience ta on css.target_audience_id = ta.target_audience_id
+      where customer_satisfaction_survey_id = $1`,
       [id]
     );
 
@@ -66,6 +72,7 @@ export default class CustomerSatisfactionSurveyRepository
       contact_email,
       updated_at,
       created_at,
+      name,
     } =
       (survey as {
         customer_satisfaction_survey_id: string;
@@ -78,6 +85,7 @@ export default class CustomerSatisfactionSurveyRepository
         updated_at: Date;
         created_at: Date;
         target_audience_id: string;
+        name: string;
       }) || {};
 
     return new CustomerSatisfactionSurvey(
@@ -85,7 +93,7 @@ export default class CustomerSatisfactionSurveyRepository
       title,
       description,
       max_rating,
-      target_audience_id,
+      new TargetAudience(target_audience_id, name),
       status,
       contact_email,
       created_at,

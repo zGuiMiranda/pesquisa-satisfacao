@@ -1,4 +1,4 @@
-import BusinessError from "../../../src/domain/errors/business-error";
+import BusinessError from "../../domain/errors/business-error";
 
 type HTTPSTATUSES = 200 | 201 | 400 | 500;
 
@@ -15,6 +15,20 @@ export default class AbstractController {
     reply,
     status: HTTPSTATUSES = this.STATUSES.SUCCESS_GET
   ) {
+    reply.status(status).send(response);
+  }
+
+  sendResponseCSV(
+    response,
+    reply,
+    status: HTTPSTATUSES = this.STATUSES.SUCCESS_GET,
+    fileName: string
+  ) {
+    reply.header("Content-Type", "text/csv");
+    reply.header(
+      "Content-Disposition",
+      `attachment; filename="${fileName}.csv"`
+    );
     reply.status(status).send(response);
   }
 

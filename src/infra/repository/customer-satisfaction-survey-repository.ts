@@ -36,7 +36,7 @@ export default class CustomerSatisfactionSurveyRepository
   ): Promise<CustomerSatisfactionSurvey> {
     await this.connection.query(
       `update ${this.schemaTableStatement} set title = $1, description = $2, contact_email = $3, max_rating = $4,
-       updated_at = $5 where customer_satisfaction_survey_id = $6`,
+       updated_at = $5, target_audience_id = $6 where customer_satisfaction_survey_id = $7`,
       [
         customerSatisfactionSurvey.Title,
         customerSatisfactionSurvey.Description,
@@ -44,6 +44,7 @@ export default class CustomerSatisfactionSurveyRepository
         customerSatisfactionSurvey.MaxRating,
         customerSatisfactionSurvey.UpdatedAt,
         customerSatisfactionSurvey.CustomSatisfactionSurveyId,
+        customerSatisfactionSurvey.TargetAudience.Id,
       ]
     );
     return this.findById(customerSatisfactionSurvey.CustomSatisfactionSurveyId);

@@ -6,8 +6,8 @@ CREATE TABLE chlng_dev.target_audience (
     target_audience_id UUID PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ
 );
 
 CREATE TABLE chlng_dev.customer_satisfaction_survey (
@@ -17,8 +17,8 @@ CREATE TABLE chlng_dev.customer_satisfaction_survey (
     description TEXT NOT NULL,
     max_rating INTEGER NOT NULL,
     contact_email TEXT NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ,
     status VARCHAR(50) NOT NULL,
     CONSTRAINT status_check CHECK (status IN ('active', 'inactive')),
     CONSTRAINT fk_target_audience FOREIGN KEY (target_audience_id) REFERENCES chlng_dev.target_audience(target_audience_id) ON DELETE CASCADE
@@ -29,7 +29,7 @@ CREATE TABLE chlng_dev.customer_satisfaction_survey_answer (
     customer_satisfaction_survey_id UUID NOT NULL,
     feedback VARCHAR(250),
     rating INTEGER NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CONSTRAINT fk_customer_satisfaction_survey_id FOREIGN KEY (customer_satisfaction_survey_id) REFERENCES chlng_dev.customer_satisfaction_survey(customer_satisfaction_survey_id) ON DELETE CASCADE
 );
 

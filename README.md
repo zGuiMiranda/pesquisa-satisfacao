@@ -12,14 +12,14 @@ drop containers: pnpm container-down-all <b>OR</b> npm run container-down-all <b
 <hr>
 <b><h2>Steps:</h2></b> 
 npm install <br/>
-npm run container-up-all (or any of the above docker commands)
+npm run container-up-all (or any of the above docker commands) <br/>
 npm run dev (if you do not want to use a image of the API, however, the database image will still be necessary: npm run container-dev-up)
 
 <hr>
 
 <b><h2>Tests steps:</h2></b> 
-npm install
-npm run container-test-up
+npm install <br/>
+npm run container-test-up <br/>
 npm run test
 
 

@@ -1,6 +1,6 @@
 # Pesquisa-satisfacao
 
-NodeJS, Typescript, Fastify, Jest, Docker and PostgresSQL.
+NodeJS, Typescript, Fastify, Jest, Docker, Swagger and PostgresSQL.
 
 <hr/>
 <b><h2>Prerequisites:</h2></b> 

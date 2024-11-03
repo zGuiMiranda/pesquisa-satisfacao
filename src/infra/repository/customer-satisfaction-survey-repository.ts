@@ -43,8 +43,8 @@ export default class CustomerSatisfactionSurveyRepository
         customerSatisfactionSurvey.ContactEmail,
         customerSatisfactionSurvey.MaxRating,
         customerSatisfactionSurvey.UpdatedAt,
-        customerSatisfactionSurvey.CustomSatisfactionSurveyId,
         customerSatisfactionSurvey.TargetAudience.Id,
+        customerSatisfactionSurvey.CustomSatisfactionSurveyId,
       ]
     );
     return this.findById(customerSatisfactionSurvey.CustomSatisfactionSurveyId);

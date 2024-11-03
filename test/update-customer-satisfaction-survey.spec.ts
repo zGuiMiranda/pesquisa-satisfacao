@@ -10,12 +10,15 @@ let createSatisfactionSurvey: CreateCustomerSatisfactionSurvey;
 let updateSatisfactionSurvey: UpdateCustomerSatisfactionSurvey;
 let getTargetAudience: GetTargetAudience;
 let targetAudienceId: string;
+let secondTargetAudienceId: string;
 
 beforeAll(async () => {
   updateSatisfactionSurvey = new UpdateCustomerSatisfactionSurvey();
   createSatisfactionSurvey = new CreateCustomerSatisfactionSurvey();
   getTargetAudience = new GetTargetAudience();
-  targetAudienceId = (await getTargetAudience.execute()).ids[0];
+  const targetAudiences = await getTargetAudience.execute();
+  targetAudienceId = targetAudiences.ids[0];
+  secondTargetAudienceId = targetAudiences.ids[1];
 });
 
 test("Should not update a non existant customer satisfaction survey", async function () {
@@ -72,7 +75,7 @@ test("Should  update a  existant customer satisfaction survey", async function (
     title: faker.lorem.words(3),
     description: faker.lorem.words(5),
     maxRating: faker.number.int({ max: 10, min: 1 }),
-    targetAudienceId,
+    targetAudienceId: secondTargetAudienceId,
     contactEmail: faker.internet.email(),
     status: SATISFACTION_SURVEY_STATUSES.ACTIVE,
   };
@@ -84,7 +87,7 @@ test("Should  update a  existant customer satisfaction survey", async function (
   expect(updateResponse.description).toBe(updateInput.description);
   expect(updateResponse.id).toBe(updateInput.id);
   expect(updateResponse.maxRating).toBe(updateInput.maxRating);
-
+  expect(updateResponse.targetAudienceId).toBe(updateInput.targetAudienceId);
   expect(updateResponse.updatedAt).not.toBeNull();
   expect(updateResponse.updatedAt).toBeInstanceOf(Date);
 });
